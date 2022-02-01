@@ -1,7 +1,7 @@
 package co.com.jsontojava;
 
-import co.com.jsontojava.services.IJSONToJava;
-import co.com.jsontojava.services.JSONToJavaImpl;
+import co.com.jsontojava.services.IJsonToJava;
+import co.com.jsontojava.services.JsonToJavaImpl;
 
 /**
  *
@@ -10,9 +10,9 @@ import co.com.jsontojava.services.JSONToJavaImpl;
 public class JsonToJava {
 
     public static void main(String[] args) {
-        IJSONToJava jSONToJava = new JSONToJavaImpl();
-        String jsonString = jSONToJava.readArchive(jSONToJava.getRoute());
-        jSONToJava.convert(jsonString);
+        IJsonToJava jsonToJava = new JsonToJavaImpl();
+        String jsonString = jsonToJava.readArchive(jsonToJava.getRoute());
+        jsonToJava.convert(jsonString);
     }
 
 }

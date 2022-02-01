@@ -4,7 +4,7 @@ package co.com.jsontojava.services;
  *
  * @author Cristhian Torres
  */
-public interface IJSONToJava {
+public interface IJsonToJava {
 
     public String getRoute();
 
