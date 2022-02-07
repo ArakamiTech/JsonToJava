@@ -205,7 +205,7 @@ public class JsonToJavaImpl implements IJsonToJava {
 				writer.println();
 
 				writer.println(Enum.DATA.getValue());
-				writer.println(Enum.PRIVATE.getValue().concat(Enum.CLASS.getValue()).concat(classesNames).concat(" {"));
+				writer.println(Enum.PUBLIC.getValue().concat(Enum.CLASS.getValue()).concat(classesNames).concat(" {"));
 				writer.println();
 				variablesDto.getVariablesName().stream().forEach(values -> writer.println("\t".concat(values)));
 				writer.println();
