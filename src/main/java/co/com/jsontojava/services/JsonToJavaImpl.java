@@ -68,11 +68,11 @@ public class JsonToJavaImpl implements IJsonToJava {
 		createDirectory();
 		var lines = jsonString.split(Enum.SPLIT.getValue());
 		var mainObject = new JSONObject(jsonString);
-		createClass(lines, mainObject, "RequestDto");
+		createClass(lines, mainObject, "Request");
 	}
 
 	private static void createDirectory() {
-		var directorio = new File(Enum.DIRECTORY.getValue());		
+		var directorio = new File(Enum.DIRECTORY.getValue());
 		if (!directorio.exists()) {
 			if (directorio.mkdirs()) {
 				JOptionPane.showMessageDialog(null, "Directorio creado", "Exitoso", 3);
@@ -99,7 +99,7 @@ public class JsonToJavaImpl implements IJsonToJava {
 				}
 			});
 		} catch (IOException e) {
-			//Nothing to control
+			// Nothing to control
 		}
 	}
 
@@ -115,13 +115,11 @@ public class JsonToJavaImpl implements IJsonToJava {
 			List<String> classesNames = new ArrayList<>();
 			for (var i = 0; i < lines.length; i++) {
 				var variables = lines[i].split("\"");
-				if (i == 0) {
-					importsDtoList.add(Enum.IMPORT_DTO.getValue().concat(nameClass).concat(";"));
-				} else if (i != lines.length - 1) {
+				if (i != 0 && i != lines.length - 1) {
 					if (flag == 0 && lines[i].contains(Enum.OPEN_BRAKET.getValue())) {
 						classesNames.add(variables[1].substring(0, 1).toUpperCase()
 								.concat(variables[1].substring(1, variables[1].length())));
-						var tipeObject = classesNames.get(classesNames.size() - 1);
+						var tipeObject = classesNames.get(classesNames.size() - 1).concat(Enum.DTO.getValue());
 						if (lines[i].contains("[")) {
 							variablesDtoList.add(Enum.PRIVATE.getValue().concat("List<").concat(tipeObject).concat("> ")
 									.concat(variables[1]).concat(";"));
@@ -198,14 +196,15 @@ public class JsonToJavaImpl implements IJsonToJava {
 
 	private static void buildDto(String classesNames, ImportsDTO importsDto, VariablesDto variablesDto) {
 		try {
-			try (var writer = new PrintWriter(
-					Enum.DIRECTORY.getValue().concat("/").concat(classesNames).concat(Enum.EXTENSION.getValue()),
+			try (var writer = new PrintWriter(Enum.DIRECTORY.getValue().concat("/")
+					.concat(classesNames.concat(Enum.DTO.getValue())).concat(Enum.EXTENSION.getValue()),
 					Enum.UTF.getValue())) {
 				importsDto.getImportsName().stream().forEach(writer::println);
 				writer.println();
 
-				writer.println(Enum.DATA.getValue());
-				writer.println(Enum.PUBLIC.getValue().concat(Enum.CLASS.getValue()).concat(classesNames).concat(" {"));
+				writer.println(Enum.LABEL_DATA.getValue());
+				writer.println(Enum.PRIVATE.getValue().concat(Enum.CLASS.getValue())
+						.concat(classesNames.concat(Enum.DTO.getValue())).concat(" {"));
 				writer.println();
 				variablesDto.getVariablesName().stream().forEach(values -> writer.println("\t".concat(values)));
 				writer.println();
